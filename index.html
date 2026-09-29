@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14161a">
+  <title>KanBan Pra Cami</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+
+    <header class="hero">
+      <div class="hero-text">
+        <h1 class="sr-only">KanBan Pra Cami</h1>
+        <canvas id="ascii-title" class="ascii" aria-hidden="true"></canvas>
+        <h2 class="focus" id="true-focus">Sua motivação diária</h2>
+      </div>
+
+      <div class="swap" id="card-swap">
+        <article class="swap-card" data-kind="next">
+          <div class="swap-head">
+            <span>Próximo passo</span>
+            <span class="swap-meta" id="next-meta"></span>
+          </div>
+          <div class="swap-body" id="card-next"></div>
+        </article>
+
+        <article class="swap-card" data-kind="progress">
+          <div class="swap-head"><span>Progresso</span></div>
+          <div class="swap-body">
+            <p class="swap-big" id="progress-num">0/0</p>
+            <p class="swap-text" id="progress-label"></p>
+            <div class="bar"><span id="progress-bar"></span></div>
+          </div>
+        </article>
+
+        <article class="swap-card" data-kind="tip">
+          <div class="swap-head"><span>Lembrete</span></div>
+          <div class="swap-body">
+            <p class="swap-quote" id="tip-text"></p>
+          </div>
+        </article>
+      </div>
+    </header>
+
+    <section class="composer nova-tarefa" aria-label="Nova tarefa">
+      <form id="form-tarefa">
+        <label class="sr-only" for="input-titulo">Título da tarefa</label>
+        <input type="text" id="input-titulo" placeholder="O que precisa ser feito?" maxlength="120" autocomplete="off" required>
+
+        <label class="sr-only" for="select-categoria">Categoria</label>
+        <select id="select-categoria">
+          <option value="tcc">TCC (TCEM)</option>
+          <option value="escola">Escola / Provas</option>
+          <option value="desenhos">Desenhos (Bicos)</option>
+          <option value="academia">Academia</option>
+          <option value="pessoal">Pessoal / Autocuidado</option>
+        </select>
+
+        <button type="submit" class="btn-primary">Adicionar tarefa</button>
+      </form>
+
+      <div class="filters" id="filtros" role="group" aria-label="Filtrar por categoria">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">Tudo</button>
+        <button class="chip" type="button" data-filter="tcc" aria-pressed="false">TCC</button>
+        <button class="chip" type="button" data-filter="escola" aria-pressed="false">Escola</button>
+        <button class="chip" type="button" data-filter="desenhos" aria-pressed="false">Desenhos</button>
+        <button class="chip" type="button" data-filter="academia" aria-pressed="false">Academia</button>
+        <button class="chip" type="button" data-filter="pessoal" aria-pressed="false">Pessoal</button>
+      </div>
+    </section>
+
+    <main class="kanban-board" id="board">
+      <section class="kanban-column" id="coluna-backlog" data-status="todo" aria-labelledby="titulo-todo">
+        <div class="col-head">
+          <h2 id="titulo-todo">A Fazer</h2>
+          <span class="count" data-count>00</span>
+        </div>
+        <div class="task-list"></div>
+      </section>
+
+      <section class="kanban-column" id="coluna-doing" data-status="doing" aria-labelledby="titulo-doing">
+        <div class="col-head">
+          <h2 id="titulo-doing">Fazendo</h2>
+          <span class="count" data-count>00</span>
+        </div>
+        <p class="col-note" id="wip-note" hidden>Muita coisa em andamento. Terminar uma antes abre espaço.</p>
+        <div class="task-list"></div>
+      </section>
+
+      <section class="kanban-column" id="coluna-done" data-status="done" aria-labelledby="titulo-done">
+        <div class="col-head">
+          <h2 id="titulo-done">Concluído</h2>
+          <span class="count" data-count>00</span>
+        </div>
+        <div class="task-list"></div>
+      </section>
+    </main>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
